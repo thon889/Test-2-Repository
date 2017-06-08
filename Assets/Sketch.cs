@@ -25,23 +25,29 @@ public class Sketch : MonoBehaviour {
         Revenue[] revenue_x = JsonReader.Deserialize<Revenue[]>(jsonResponse);
 
         int totalCubes = revenue_x.Length;
-        int totalDistance = 5;
+        float totalDistance = 0.5f;
         int i = 0;
         //We can now loop through the array of objects and access each object individually
         foreach (Revenue revenue in revenue_x)
-        {
+            while (i < 10)
+            {
             //Example of how to use the object
             Debug.Log("This products name is: " + revenue.City);
-            float perc = i / (float)totalCubes;
+            float perc = i;
             i++;
             float x = perc * totalDistance;
             float y = 5.0f;
             float z = 0.0f;
-            GameObject newCube = (GameObject)Instantiate(myPrefab, new Vector3(x, y, z), Quaternion.identity);
-            newCube.GetComponent<myCubeScript>().setSize((1.0f - perc) * 2);
-            newCube.GetComponent<myCubeScript>().ratateSpeed = perc;
+            GameObject newCube = (GameObject)Instantiate(myPrefab, new Vector3(x, 5, z), Quaternion.identity);
+            newCube.GetComponent<myCubeScript>().setSize((0.5f ));
+            newCube.GetComponent<myCubeScript>().ratateSpeed = 0.2f;
             newCube.GetComponentInChildren<TextMesh>().text = revenue.City;
-            newCube.GetComponent<Renderer>().material.color = Color.green;
+
+            if (revenue.Category == "Mix")
+            { newCube.GetComponent<Renderer>().material.color = Color.green; }
+            else
+            { newCube.GetComponent<Renderer>().material.color = Color.red; } 
+          
 
         }
     }
