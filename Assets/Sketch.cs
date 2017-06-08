@@ -6,7 +6,7 @@ public class Sketch : MonoBehaviour {
     //string DataSeat = "treesurveyv3"; 
     // Put your URL here
     //public 
-    string _WebsiteURL = "http://infomgmt192.azurewebsites.net/tables/" + "treesurveyv3" + "?zumo-api-version=2.0.0";
+    string _WebsiteURL = "http://infomgmt192.azurewebsites.net/tables/" + "RevenueTest2" + "?zumo-api-version=2.0.0";
 
     void Start () {
         //Reguest.GET can be called passing in your ODATA url as a string in the form:
@@ -22,25 +22,25 @@ public class Sketch : MonoBehaviour {
         }
 
         //We can now deserialize into an array of objects - in this case the class we created. The deserializer is smart enough to instantiate all the classes and populate the variables based on column name.
-        TreeSurvey[] treesurveys = JsonReader.Deserialize<TreeSurvey[]>(jsonResponse);
+        Revenue[] revenue_x = JsonReader.Deserialize<Revenue[]>(jsonResponse);
 
-        int totalCubes = treesurveys.Length;
+        int totalCubes = revenue_x.Length;
         int totalDistance = 5;
         int i = 0;
         //We can now loop through the array of objects and access each object individually
-        foreach (TreeSurvey treesurvey in treesurveys)
+        foreach (Revenue revenue in revenue_x)
         {
             //Example of how to use the object
-            Debug.Log("This products name is: " + treesurvey.Location);
+            Debug.Log("This products name is: " + revenue.City);
             float perc = i / (float)totalCubes;
             i++;
             float x = perc * totalDistance;
-            float y = treesurvey.Y;// 5.0f;
+            float y = 5.0f;
             float z = 0.0f;
             GameObject newCube = (GameObject)Instantiate(myPrefab, new Vector3(x, y, z), Quaternion.identity);
             newCube.GetComponent<myCubeScript>().setSize((1.0f - perc) * 2);
             newCube.GetComponent<myCubeScript>().ratateSpeed = perc;
-            newCube.GetComponentInChildren<TextMesh>().text = treesurvey.Location;
+            newCube.GetComponentInChildren<TextMesh>().text = revenue.City;
             newCube.GetComponent<Renderer>().material.color = Color.green;
 
         }
